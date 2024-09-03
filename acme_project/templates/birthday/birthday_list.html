@@ -1,0 +1,26 @@
+<!-- templates/birthday/birthday_list.html -->
+{% extends "base.html" %}
+
+{% block content %}
+  {% for birthday in birthdays %}
+    <div class="col-10">  
+        <div>
+        {{ birthday.first_name }} {{ birthday.last_name }} - {{ birthday.birthday }}<br>
+        <a href="{% url 'birthday:detail' birthday.id %}">Сколько до дня рождения?</a>
+        </div>
+      <!-- Ссылку тоже обернём в div; адрес ссылки
+        указываем через namespace:name -->
+        <div>
+            <a href="{% url 'birthday:edit' birthday.id %}">Изменить запись</a>
+            <a href="{% url 'birthday:delete' birthday.id %}">Удалить запись</a>
+        </div>
+      {% if not forloop.last %}
+        <hr>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+    <!-- Подключаем пагинатор -->
+    {% include "includes/paginator.html" %}
+
+{% endblock %}
